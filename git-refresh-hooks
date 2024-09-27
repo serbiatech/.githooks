@@ -1,4 +1,6 @@
 #!/bin/sh
 
-git submodule update --init --recursive
-find .git/hooks -type l -exec rm {} \; && find .githooks/src -type f -exec ln -sf ../../{} .git/hooks/ \;
+git submodule foreach git pull origin main
+
+find .git/hooks -type l -exec rm {} \;
+find .githooks/src -type f -exec ln -sf ../../{} .git/hooks/ \;
