@@ -1,9 +1,0 @@
-#!/bin/sh
-
-git submodule update --init --recursive
-
-#HOOKS_DIR=
-
-mytoplevel=`git rev-parse --show-toplevel`
-
-echo "$mytoplevel"
