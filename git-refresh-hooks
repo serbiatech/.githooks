@@ -1,6 +1,4 @@
 #!/bin/sh
 
-HOOKS_DIR="./githooks/src"
-
-`git submodule update --init --recursive`
-`git config core.hooksPath $HOOKS_DIR`
+git submodule update --init --recursive
+find .git/hooks -type l -exec rm {} \; && find .githooks/src -type f -exec ln -sf ../../{} .git/hooks/ \;
