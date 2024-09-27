@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# This hook script verifies that commit message is in valid format.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+source "./patterns"
+
+echo "Checking commit message format..."
+
+COMMIT_MSG=$(cat "$1")
+TASK_ID_IN_COMMIT=$(echo "$COMMIT_MSG" | { grep -Eo "$VALID_COMMIT_REGEX" || true; })
+
+if [ -z "$TASK_ID_IN_COMMIT" ]
+then
+  echo "Your commit message is not valid: $COMMIT_MSG"
+  echo "Commit message must match pattern: $VALID_COMMIT_REGEX"
+
+  exit 1
+fi
