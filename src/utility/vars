@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# This script is used as base that holds variables.
+# Called by other hooks to get default variables.
+#
+# Here you can configure allowed branch name prefixes
+#
+ALLOWED_BRANCH_PREFIXES='feat|chore|fix|spike'
+
+#
+# Here you can configure task id
+# regular expression pattern
+#
+TASK_ID_REGEX='[A-Z]+-[0-9]+'
+
+#
+# Here you can configure commit message
+# regular expression pattern
+#
+COMMIT_MSG_REGEX='[@/#&*%,.=+-_a-zA-Z0-9 ]+'
+
+#
+# Here you can configure branch suffix
+# regular expression pattern
+#
+BRANCH_SUFFIX_REGEX='[a-zA-Z0-9-]+'
+
+#
+# This is regular expression patterns for valid
+# branch task id and commit message.
+#
+TASK_ID_IN_COMMIT_REGEX="^($ALLOWED_BRANCH_PREFIXES)\($TASK_ID_REGEX\)+"
+TASK_ID_IN_BRANCH_REGEX="^($ALLOWED_BRANCH_PREFIXES)\/$TASK_ID_REGEX\/+"
+
+#
+# This is regular expression patterns for valid
+# branch name and commit message.
+#
+VALID_COMMIT_REGEX="^($ALLOWED_BRANCH_PREFIXES)\($TASK_ID_REGEX\):$COMMIT_MSG_REGEX$"
+VALID_BRANCH_REGEX="^($ALLOWED_BRANCH_PREFIXES)\/$TASK_ID_REGEX\/$BRANCH_SUFFIX_REGEX$"
