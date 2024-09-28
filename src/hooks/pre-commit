@@ -11,13 +11,3 @@ source ./.githooks/src/utility/functions
 echo "Checking branch name format..."
 
 check_pattern "$VALID_BRANCH_REGEX" "$(git rev-parse --abbrev-ref HEAD)" "Branch name"
-
-#BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-#
-#if ! [[ "$BRANCH_NAME" =~ $VALID_BRANCH_REGEX ]]
-#then
-#  echo "Your branch name is not valid: $BRANCH_NAME"
-#  echo "Branch name must match pattern: $VALID_BRANCH_REGEX"
-#
-#  exit 1
-#fi
