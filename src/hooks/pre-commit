@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# This hook script verifies that branch name is in valid format.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+source ../vars
+source ../functions
+
+echo "Checking branch name format..."
+
+check_pattern "$VALID_BRANCH_REGEX" "$(git rev-parse --abbrev-ref HEAD)" "Branch name"
+
+#BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+#
+#if ! [[ "$BRANCH_NAME" =~ $VALID_BRANCH_REGEX ]]
+#then
+#  echo "Your branch name is not valid: $BRANCH_NAME"
+#  echo "Branch name must match pattern: $VALID_BRANCH_REGEX"
+#
+#  exit 1
+#fi

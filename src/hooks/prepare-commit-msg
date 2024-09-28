@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# This hook script verifies task id in the branch name is the same as it is in commit message
+# If task id is not present in the commit message this hook will add it.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+source ../vars
+source ../functions
+
+COMMIT_MSG=$(cat "$1")
+
+TASK_ID_IN_COMMIT=$(get_by_pattern "$TASK_ID_IN_COMMIT_REGEX" "$COMMIT_MSG")
+TASK_ID_IN_BRANCH=$(get_by_pattern "$TASK_ID_IN_BRANCH_REGEX" "$(git rev-parse --abbrev-ref HEAD)")
+TASK_ID_IN_BRANCH_MODIFIED="$(explode_str "$TASK_ID_IN_BRANCH" "/" 1)($(explode_str "$TASK_ID_IN_BRANCH" "/" 2))"
+
+if [ -n "$TASK_ID_IN_COMMIT" ]
+then
+  check_equal "$TASK_ID_IN_COMMIT" "$TASK_ID_IN_BRANCH_MODIFIED" "Commit message task id" "branch name task id"
+elif [ -n "$TASK_ID_IN_BRANCH_MODIFIED" ]
+then
+  echo "$TASK_ID_IN_BRANCH_MODIFIED: $COMMIT_MSG" > "$COMMIT_FILE"
+fi
+
+
+#COMMIT_FILE=$1
+#COMMIT_MSG=$(cat "$1")
+#CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+#
+#TASK_ID_IN_COMMIT=$(echo "$COMMIT_MSG" | { grep -Eo "$TASK_ID_IN_COMMIT_REGEX" || true; })
+#TASK_ID_IN_BRANCH=$(echo "$CURRENT_BRANCH" | { grep -Eo "$TASK_ID_IN_BRANCH_REGEX" || true; })
+#TASK_ID_IN_BRANCH_MODIFIED="$(echo "$TASK_ID_IN_BRANCH" | cut -d / -f 1 )($(echo "$TASK_ID_IN_BRANCH" | cut -d / -f 2))"
+#
+#if [ -n "$TASK_ID_IN_COMMIT" ]
+#then
+#  if [ "$TASK_ID_IN_COMMIT" != "$TASK_ID_IN_BRANCH_MODIFIED" ]
+#  then
+#    echo "Error, your commit message task '$TASK_ID_IN_COMMIT' is not equal to current branch task '$TASK_ID_IN_BRANCH_MODIFIED'"
+#    exit 1
+#  fi
+#elif [ -n "$TASK_ID_IN_BRANCH_MODIFIED" ]
+#then
+#  echo "$TASK_ID_IN_BRANCH_MODIFIED: $COMMIT_MSG" > "$COMMIT_FILE"
+#fi

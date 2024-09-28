@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# Here you can configure branch suffix
+# regular expression pattern
+#
+COLOR_SCHEMA_RED='\033[0;31m'
+COLOR_SCHEMA_NC='\033[0m'
+
+#
+# Explode string in to parts by delimiter
+# and extracts part by position
+#
+explode_str() {
+  echo "$1" | cut -d "$2" -f "$3"
+}
+
+#
+# Extracts part of the string by given pattern
+# If noting was found by patter it returns null
+#
+get_by_pattern() {
+ echo "$2" | { grep -Eo "$1" || true; }
+}
+
+#
+# Check if given string match a pattern
+# If pattern is not match it will stop script execution
+#
+check_pattern() {
+  if ! [[ "$2" =~ $1 ]]
+  then
+    echo "${COLOR_SCHEMA_RED}ERROR: $3 $2 does not match pattern $1${COLOR_SCHEMA_NC}"
+
+    exit 1
+  fi
+}
+
+#
+# Check if given string is equal to another string
+# If strings are note equal it will stop script execution
+#
+check_equal() {
+  if [ "$1" != "$2" ]
+  then
+    echo "${COLOR_SCHEMA_RED}ERROR: $3 '$1' is not equal to $4 '$2'${COLOR_SCHEMA_NC}"
+
+    exit 1
+  fi
+}
