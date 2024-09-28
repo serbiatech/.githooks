@@ -2,5 +2,6 @@
 
 git submodule foreach git pull origin main
 
+chmod +x .githooks/src
 find .git/hooks -type l -exec rm {} \;
 find .githooks/src -type f -exec ln -sf ../../{} .git/hooks/ \;
