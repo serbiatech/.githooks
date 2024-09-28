@@ -35,7 +35,7 @@ check_pattern() {
 check_equal() {
   if [ "$1" != "$2" ]
   then
-    echo "ERROR: $3 '$1' is not equal to $4 '$2'"
+    echo "ERROR: $3 $1 is not equal to $4 $2"
 
     exit 1
   fi
