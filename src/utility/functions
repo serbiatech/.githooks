@@ -1,12 +1,5 @@
 #!/bin/bash
 #
-# Here you can configure branch suffix
-# regular expression pattern
-#
-COLOR_SCHEMA_RED='\033[0;31m'
-COLOR_SCHEMA_NC='\033[0m'
-
-#
 # Explode string in to parts by delimiter
 # and extracts part by position
 #
@@ -29,7 +22,7 @@ get_by_pattern() {
 check_pattern() {
   if ! [[ "$2" =~ $1 ]]
   then
-    echo "${COLOR_SCHEMA_RED}ERROR: $3 $2 does not match pattern $1${COLOR_SCHEMA_NC}"
+    echo "ERROR: $3 $2 does not match pattern $1"
 
     exit 1
   fi
@@ -42,7 +35,7 @@ check_pattern() {
 check_equal() {
   if [ "$1" != "$2" ]
   then
-    echo "${COLOR_SCHEMA_RED}ERROR: $3 '$1' is not equal to $4 '$2'${COLOR_SCHEMA_NC}"
+    echo "ERROR: $3 '$1' is not equal to $4 '$2'"
 
     exit 1
   fi
