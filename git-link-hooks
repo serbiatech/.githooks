@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# First update submodules is called
+# before hooks are linked
+#
+git submodule foreach git pull origin main
+
+#
+# First old links are deleted
+# before new link are created
+#
+find .git/hooks -type l -exec rm {} \;
+find .githooks/src/hooks -type f -exec ln -sf ../../../{} .git/hooks/ \;

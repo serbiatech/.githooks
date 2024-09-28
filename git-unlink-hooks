@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# All links to hooks are removed
+#
+find .git/hooks -type l -exec rm {} \;
